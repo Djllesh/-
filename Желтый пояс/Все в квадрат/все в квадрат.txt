@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <utility>
+using namespace std;
+template<typename First, typename Second> pair<First, Second> operator*(const pair<First, Second>& lhs, const pair< First, Second>& rhs);
+template <typename T> vector<T> Sqr(vector<T>& v);
+template <typename First, typename Second> pair<First, Second> Sqr(pair<First, Second>& p);
+template <typename First, typename Second> map<First, Second> Sqr(map<First, Second>& m);
+template<typename First, typename Second>
+pair<First, Second> operator*(const pair<First, Second>& lhs, const pair< First, Second>& rhs)
+{
+	return make_pair(lhs.first * rhs.first, lhs.second * rhs.second);
+}
+template <typename T>
+vector<T> Sqr(vector<T>& v)
+{
+	for (auto& item : v)
+	{
+		item *= item;
+	}
+	return v;
+}
+template <typename First, typename Second>
+pair<First, Second> Sqr(pair<First, Second>& p)
+{
+	p.first *= p.first;
+	p.second *= p.second;
+	return p;
+}
+template <typename First, typename Second>
+map<First, Second> Sqr(map<First, Second>& m)
+{
+	for (auto& item : m)
+	{
+		item.second = item.second * item.second;
+	}
+	return m;
+}
+int main()
+{
+	vector<int> v = { 1, 2, 3 };
+	cout << "vector:";
+	for (int x : Sqr(v)) {
+		cout << ' ' << x;
+	}
+	cout << endl;
+	map<int, pair<int, int>> map_of_pairs = {
+  {4, {2, 2}},
+  {7, {4, 3}}
+	};
+	cout << "map of pairs:" << endl;
+	for (const auto& x : Sqr(map_of_pairs)) {
+		cout << x.first << ' ' << x.second.first << ' ' << x.second.second << endl;
+	}
+	return 0;
+}
